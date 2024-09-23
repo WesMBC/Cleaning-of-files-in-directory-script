@@ -4,6 +4,10 @@ import json
 import sys
 
 
+"""
+Weslin Barahona
+"""
+
 #Obtencion del directorio actual donde se encuentra ejecutando el archivos
 #Directorio de archivos a escanear
 actual_Path = os.getcwd()
