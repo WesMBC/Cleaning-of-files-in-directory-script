@@ -1,0 +1,14 @@
+##[pylyzer] failed /home/weslin/Proyectos/pythonScripts/checkDownloads.py 1726790294 2774
+.os = pyimport "Failure"
+.Failure = pyimport "Failure"
+
+.___v_desugar_1 = pyimport "Failure"
+
+.Path: Never
+.base_Path: {"/home/weslin"}
+.extensiones_comunes: List!({".xls", ".db", ".mdb", ".rtf", ".ogg", ".m4a", ".exe", ".xlsx", ".woff2", ".jpeg", ".docx", ".app", ".tiff", ".mov", ".woff", ".md", ".sqlite", ".bin", ".ini", ".otf", ".ppt", ".iso", ".plist", ".ova", ".ods", ".svg", ".py", ".pptx", ".h", ".swift", ".fbx", ".parquet", ".js", ".accdb", ".doc", ".tsv", ".ovf", ".toml", ".pl", ".sh", ".sketch", ".wmv", ".gz", ".xz", ".env", ".css", ".c", ".obj", ".rar", ".tar", ".stl", ".png", ".qcow2", ".xd", ".properties", ".vdi", ".jpg", ".cfg", ".indd", ".conf", ".flac", ".rs", ".ai", ".txt", ".bmp", ".json", ".err", ".mkv", ".cdr", ".out", ".pfx", ".wav", ".csr", ".deb", ".ttf", ".gpg", ".odt", ".bat", ".cpp", ".psd", ".p12", ".rb", ".pem", ".crt", ".tar.gz", ".vmdk", ".yaml", ".zip", ".orc", ".pdf", ".wma", ".apk", ".php", ".key", ".gif", ".mp3", ".mp4", ".avro", ".xml", ".bz2", ".dmg", ".fig", ".flv", ".go", ".sql", ".pkg", ".7z", ".3ds", ".log", ".csv", ".odp", ".webm", ".ico", ".aac", ".avi", ".msi", ".run", ".rpm", ".blend", ".html", ".java", ".mpeg", ".whl", ".webp", ".asc", ".ts"}, 140)
+
+.obtener_Extension: (fileName: Str) -> Never
+.mostrar_Documentos: (path: Str) -> Never
+.main: () -> Never
+
