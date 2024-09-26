@@ -2,6 +2,7 @@ import os
 from datetime import datetime
 import json
 import sys
+from shutil import rmtree
 
 
 """
@@ -22,7 +23,7 @@ except Exception as e:
     print(e)
     
 #Proceso para leer un archivo json, parsearlo a dicccionario
-json_Data_File = open("fileType.json",'r') 
+json_Data_File = open(files_Types_File,'r') 
 data = json.load(json_Data_File)
 json_Data_File.close()
 #Asignacion de la data a variable
@@ -36,19 +37,6 @@ def add_file_Type(fileExtension:str,filePath:str) -> bool:
     file.close()
     return True
 
-
-def obtener_Extension(fileName:str) -> str:
-    """
-    Function with the objetive of recive a file name and return his extension
-    it works bases on the last "." of the text 
-    
-    Exception case!
-    if the dir uses "." in it's name this will cause to be check as file
-    """
-    position = fileName.rfind(".")
-    if position == -1:
-        return "NotFile"
-    return fileName[position:]
 
 def scan_File_Documents_From_Path(path=base_Path,delTime:int=30) -> list[str]:
     """
@@ -90,20 +78,8 @@ def scan_File_Documents_From_Path(path=base_Path,delTime:int=30) -> list[str]:
         print (f'ha pasado un tiempo de: { time_Diference.days } dias y {time_Diference.seconds // (60*60)} horas desde su ultimo acceso',end="\n\n")
 
 
-        #Comprobacion mediante la funcion obtener_Extension si la extension del archivo esta presente
-        #En caso de estar entra y se añade a la lista de archvos caso contrario se verifica si es un directorio y si tampoco se define como deconocido
-        if obtener_Extension(elemento) in extensiones_comunes:
-            if time_Diference.days >= delTime:
-                archivos.append(elemento)
-        elif obtener_Extension(elemento) == "NotFile":
-            continue 
-        else:
-            print(f'El elemento {elemento} no es ni directorio ni un archivo conocido ',end="")
-            response = input("Va a querer agregar el archivo a la lista de extensiones Yes/No: ")
-            if response.upper() in ["YES","Y","SI"]:
-                add_file_Type(obtener_Extension(elemento),files_Types_File)
-            else:
-                continue
+        if time_Diference.days >= delTime:
+            archivos.append(elemento)
     return archivos
 
 def delete_List_Files_From_Path(arreglo:list[str],path=base_Path) -> None:
@@ -112,7 +88,11 @@ def delete_List_Files_From_Path(arreglo:list[str],path=base_Path) -> None:
     """
     try:
         for archivo in arreglo:
-            os.remove(base_Path+archivo)
+            if os.path.isfile(archivo) == True:
+                os.remove(path+archivo)
+            else:
+                rmtree(archivo)
+
     except Exception as e:
         print(f'error con el borrado de archivos')
         raise e
@@ -123,13 +103,12 @@ def delete_List_Files_From_Path(arreglo:list[str],path=base_Path) -> None:
 
 def main():
     archivos_A_Borrar = scan_File_Documents_From_Path()
-    print(f"se borraran los siguientes archivos: \n {archivos_A_Borrar}")
+    print(f"se borraran los siguientes {len(archivos_A_Borrar)} archivos y/o directorios: \n {archivos_A_Borrar}")
     respuesta = input("Desea continuar Y/N:\t")
     if respuesta.upper() in ["YES","Y","S","SI"]:
         delete_List_Files_From_Path(archivos_A_Borrar,base_Path)
     else:
-        print(f'No se borraran los {len(archivos_A_Borrar)} archivos')
-    #add_file_Type(".lua","./fileType.json")
+        print(f'No se borraran los archivos')
 
 
 
