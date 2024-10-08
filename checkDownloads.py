@@ -3,31 +3,26 @@ from datetime import datetime
 import json
 import sys
 from shutil import rmtree
-
+from argparse import ArgumentParser
 
 """
 Weslin Barahona
+04/10/2024
 """
 
-#Obtencion del directorio actual donde se encuentra ejecutando el archivos
+parser = ArgumentParser(description= "This script objetive is to scan a directory and with a range of day define if the files or directories inside shoud be deleted based on the creation.")
+parser.add_argument('-d', '--directory', type=str, required=True, help="The full path directory to be scan and work with (home/user/objetive)") 
+parser.add_argument('-t', '--time', type=int, required=False, help="the time in days to define if the files or directory inside will be deleted (only accepts time in days)")
+args = parser.parse_args()
+
+
+
+#Obtencion del directorio actual donde se encuentra ejecutando el Archivos
 #Directorio de archivos a escanear
 actual_Path = os.getcwd()
-base_Path = sys.argv[1]
-#Directorio de archivo fileTypes.json
-files_Types_File = "./fileType.json"
-try:
-    if type(sys.argv[2]) == str:
-        files_Types_File = sys.argv[2]
-        print(files_Types_File)
-except Exception as e:
-    print(e)
-    
-#Proceso para leer un archivo json, parsearlo a dicccionario
-json_Data_File = open(files_Types_File,'r') 
-data = json.load(json_Data_File)
-json_Data_File.close()
-#Asignacion de la data a variable
-extensiones_comunes = data["extensiones_comunes"]
+base_Path = args.directory
+time_set = args.time
+
 
 def add_file_Type(fileExtension:str,filePath:str) -> bool:
     file = open(filePath,"w")
@@ -102,7 +97,7 @@ def delete_List_Files_From_Path(arreglo:list[str],path=base_Path) -> None:
 
 
 def main():
-    archivos_A_Borrar = scan_File_Documents_From_Path()
+    archivos_A_Borrar = scan_File_Documents_From_Path(base_Path,time_set)
     print(f"se borraran los siguientes {len(archivos_A_Borrar)} archivos y/o directorios: \n {archivos_A_Borrar}")
     respuesta = input("Desea continuar Y/N:\t")
     if respuesta.upper() in ["YES","Y","S","SI"]:
